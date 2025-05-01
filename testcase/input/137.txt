@@ -1,0 +1,10 @@
+INSERT x string
+ASSIGN x ''
+INSERT y string
+ASSIGN y x
+ASSIGN x 'abc'
+ASSIGN y x
+BEGIN
+INSERT z string
+ASSIGN z y
+END

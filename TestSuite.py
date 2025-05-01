@@ -208,3 +208,450 @@ class TestSymbolTable(unittest.TestCase):
         expected = ["success", "success", "success", "x//0 y//1"]
 
         self.assertTrue(TestUtils.check(input, expected, 117))
+
+    def test_18(self):
+        input = [
+            "INSERT x number",
+            "BEGIN",
+            "INSERT y string",
+            "INSERT z number",
+            "ASSIGN z 2300",
+            "ASSIGN x 12",
+            "ASSIGN x z",
+            "RPRINT",
+            "END",
+            "PRINT"
+        ]
+        expected = ["success", "success", "success", "success", "success", "success", "z//1 y//1 x//0", "x//0"]
+
+        self.assertTrue(TestUtils.check(input, expected, 118))
+
+    def test_19(self):
+        input = ["INSERT 'a' number"]
+        expected = ["Invalid: INSERT 'a' number"]
+
+        self.assertTrue(TestUtils.check(input, expected, 119))
+
+    def test_20(self):
+        input = ["INSERT A4 string", "PRINT"]
+        expected = ["Invalid: INSERT A4 string"]
+
+        self.assertTrue(TestUtils.check(input, expected, 120))
+
+    def test_21(self):
+        input = [
+            "BEGIN",
+            "INSERT x number",
+            "ASSIGN x 9",
+            "END",
+            "INSERT y string",
+            "ASSIGN y 2a",
+            "PRINT"
+        ]
+        expected = ["Invalid: ASSIGN y 2a"]
+
+        self.assertTrue(TestUtils.check(input, expected, 121))
+
+    def test_22(self):
+        input = ["INSERT x boolean", "ASSIGN x 1"]
+        expected = ["Invalid: INSERT x boolean"]
+
+        self.assertTrue(TestUtils.check(input, expected, 122))
+
+    def test_23(self):
+        input = ["INSERT x number", "ASSIGN x 1.5"]
+        expected = ["Invalid: ASSIGN x 1.5"]
+
+        self.assertTrue(TestUtils.check(input, expected, 123))
+
+    def test_24(self):
+        input = ["INSERT x string", "ASSIGN x 'a b'"]
+        expected = ["Invalid: ASSIGN x 'a b'"]
+
+        self.assertTrue(TestUtils.check(input, expected, 124))
+
+    def test_25(self):
+        input = [
+            "INSERT x number",
+            "INSERT y string",
+            "ASSIGN x 18",
+            "ASSIGN y x",
+        ]
+        expected = ["TypeMismatch: ASSIGN y x"]
+
+        self.assertTrue(TestUtils.check(input, expected, 125))
+
+    def test_26(self):
+        input = [
+            "BEGIN",
+            "INSERT x1 string",
+            "INSERT x2 string",
+            "BEGIN",
+            "INSERT x3 string",
+            "ASSIGN x3 x2",
+            "ASSIGN x2 x1",
+            "BEGIN",
+            "LOOKUP x3",
+            "END",
+            "LOOKUP x2",
+            "PRINT",
+            "END",
+            "LOOKUP x1",
+            "END",
+            "RPRINT"
+        ]
+        expected = ["success", "success", "success", "success", "success", "2", "1", "x1//1 x2//1 x3//2", "1", ""]
+
+        self.assertTrue(TestUtils.check(input, expected, 126))
+
+    def test_27(self):
+        input = ["END"]
+        expected = ["UnknownBlock"]
+        self.assertTrue(TestUtils.check(input, expected, 127))
+
+    def test_28(self):
+        input = [
+            "INSERT z string",
+            "BEGIN",
+            "INSERT x number",
+            "ASSIGN x z",
+            "LOOKUP x",
+            "END",
+            "RPRINT"
+        ]
+        expected = ["TypeMismatch: ASSIGN x z"]
+
+        self.assertTrue(TestUtils.check(input, expected, 128))
+
+    def test_29(self):
+        input = [
+            "ADD x number",
+            "LOOKUP x"
+        ]
+        expected = ["Invalid: ADD x number"]
+
+        self.assertTrue(TestUtils.check(input, expected, 129))
+
+    def test_30(self):
+        input = [
+            "INSERT a number",
+            "BEGIN",
+            "INSERT c string",
+            "ASSIGN c 'xyz'",
+            "BEGIN",
+            "INSERT b number",
+            "PRINT",
+            "END",
+            "RPRINT",
+            "LOOKUP b",
+            "END",
+        ]
+        expected = ["Undeclared: LOOKUP b"]
+
+        self.assertTrue(TestUtils.check(input, expected, 130))
+
+    def test_31(self):
+        input = [
+            "INSERT x number",
+            "INSERT y string",
+            "INSERT x number",
+            "BEGIN",
+            "INSERT z number",
+            "PRINT",
+            "END",
+        ]
+        expected = ["Redeclared: INSERT x number"]
+
+        self.assertTrue(TestUtils.check(input, expected, 131))
+
+    def test_32(self):
+        input = [
+            "INSERT x number",
+            "INSERT y string",
+            "BEGIN",
+            "INSERT x string",
+            "INSERT z number",
+            "ASSIGN z 100",
+            "LOOKUP z",
+            "END",
+            "PRINT",
+        ]
+        expected = ["success", "success", "success", "success", "success", "1", "x//0 y//0"]
+
+        self.assertTrue(TestUtils.check(input, expected, 132))
+
+    def test_33(self):
+        input = [
+            "Insert x number",
+            "load x 1",
+        ]
+        expected = ["Invalid: Insert x number"]
+
+        self.assertTrue(TestUtils.check(input, expected, 133))
+
+    def test_34(self):
+        input = [
+            "PRINT",
+            "INSERT x number",
+            "BEGIN",
+            "INSERT c string",
+            "BEGIN",
+            "INSERT h string",
+            "RPRINT",
+            "END",
+            "PRINT",
+            "END",
+        ]
+        expected = ["", "success", "success", "success", "h//2 c//1 x//0", "x//0 c//1"]
+
+        self.assertTrue(TestUtils.check(input, expected, 134))
+
+    def test_35(self):
+        input = [
+            "INSERT x number",
+            "ASSIGN x 100",
+            "BEGIN",
+            "INSERT x number",
+            "ASSIGN x 200",
+            "BEGIN",
+            "INSERT x number",
+            "ASSIGN x 300",
+            "END",
+            "ASSIGN x 400",
+            "END",
+            "LOOKUP x",
+        ]
+        expected = ["success", "success", "success", "success", "success", "success", "success", "0"]
+
+        self.assertTrue(TestUtils.check(input, expected, 135))
+
+    def test_36(self):
+        input = [
+            "INSERT x number",
+            "INSERT y string",
+            "BEGIN",
+            "INSERT z number",
+            "ASSIGN z 42",
+            "INSERT x string",
+            "ASSIGN x 'hello'",
+            "BEGIN",
+            "INSERT y number",
+            "ASSIGN y z",
+            "LOOKUP x",
+            "LOOKUP y",
+            "LOOKUP z",
+            "END",
+            "LOOKUP x",
+            "LOOKUP y",
+            "END",
+            "LOOKUP x",
+            "LOOKUP y",
+        ]
+        expected = [
+            "success", "success", "success", "success", "success", "success", "success", "success",
+            "1", "2", "1", "1", "0", "0", "0"
+        ]
+
+        self.assertTrue(TestUtils.check(input, expected, 136))
+
+    def test_37(self):
+        input = [
+            "INSERT x string",
+            "ASSIGN x ''",
+            "INSERT y string",
+            "ASSIGN y x",
+            "ASSIGN x 'abc'",
+            "ASSIGN y x",
+            "BEGIN",
+            "INSERT z string",
+            "ASSIGN z y",
+            "END"
+        ]
+        expected = ["success", "success", "success", "success", "success", "success", "success", "success"]
+
+        self.assertTrue(TestUtils.check(input, expected, 137))
+
+    def test_38(self):
+        input = [
+            "INSERT x number",
+            "INSERT y string",
+            "BEGIN",
+            "INSERT z number",
+            "ASSIGN z x",
+            "BEGIN",
+            "INSERT a string",
+            "ASSIGN a y",
+            "INSERT b number",
+            "ASSIGN b z",
+            "ASSIGN b a",
+            "END",
+            "END"
+        ]
+        expected = ["TypeMismatch: ASSIGN b a"]
+
+        self.assertTrue(TestUtils.check(input, expected, 138))
+
+    def test_39(self):
+        input = [
+            "BEGIN",
+            "INSERT x number",
+            "BEGIN",
+            "INSERT y string",
+            "BEGIN",
+            "INSERT z number",
+            "END",
+            "LOOKUP z",
+            "END",
+            "LOOKUP y",
+            "END"
+        ]
+        expected = ["Undeclared: LOOKUP z"]
+
+        self.assertTrue(TestUtils.check(input, expected, 139))
+
+    def test_40(self):
+        input = [
+            "BEGIN",
+            "BEGIN",
+            "BEGIN",
+            "INSERT x number",
+            "END",
+            "END",
+            "END",
+            "LOOKUP x"
+        ]
+        expected = ["Undeclared: LOOKUP x"]
+
+        self.assertTrue(TestUtils.check(input, expected, 140))
+
+    def test_41(self):
+        input = [
+            "INSERT x number",
+            "BEGIN",
+            "INSERT x string",
+            "ASSIGN x 'abc'",
+            "END",
+            "ASSIGN x 'def'"
+        ]
+        expected = ["TypeMismatch: ASSIGN x 'def'"]
+
+        self.assertTrue(TestUtils.check(input, expected, 141))
+
+    def test_42(self):
+        input = [
+            "INSERT a number",
+            "INSERT b number",
+            "INSERT c number",
+            "ASSIGN a 10",
+            "ASSIGN b a",
+            "ASSIGN c b",
+            "BEGIN",
+            "INSERT d number",
+            "ASSIGN d c",
+            "BEGIN",
+            "INSERT e string",
+            "ASSIGN e d",
+            "END",
+            "END"
+        ]
+        expected = ["TypeMismatch: ASSIGN e d"]
+
+        self.assertTrue(TestUtils.check(input, expected, 142))
+
+    def test_43(self):
+        input = [
+            "INSERT x number",
+            "INSERT 123y string",
+            "ASSIGN x 10",
+            "PRINT"
+        ]
+        expected = ["Invalid: INSERT 123y string"]
+
+        self.assertTrue(TestUtils.check(input, expected, 143))
+
+    def test_44(self):
+        input = [
+            "INSERT x number",
+            "BEGIN",
+            "INSERT y string",
+            "BEGIN",
+            "INSERT x string",
+            "END",
+            "PRINT",
+            "END"
+        ]
+        expected = ["success", "success", "success", "x//0 y//1"]
+
+        self.assertTrue(TestUtils.check(input, expected, 144))
+
+    def test_45(self):
+        input = [
+            "BEGIN",
+            "BEGIN",
+            "BEGIN",
+            "PRINT",
+            "END",
+            "PRINT",
+            "END",
+            "PRINT",
+            "END"
+        ]
+        expected = ["", "", ""]
+
+        self.assertTrue(TestUtils.check(input, expected, 145))
+
+    def test_46(self):
+        input = [
+            "INSERT",
+            "ASSIGN x 10",
+            "PRINT"
+        ]
+        expected = ["Invalid: INSERT"]
+
+        self.assertTrue(TestUtils.check(input, expected, 146))
+
+    def test_47(self):
+        input = [
+            "INSERT a string",
+            "INSERT b string",
+            "INSERT c string",
+            "ASSIGN a 'hello'",
+            "ASSIGN b a",
+            "ASSIGN c b",
+            "INSERT x number",
+            "ASSIGN x c"
+        ]
+        expected = ["TypeMismatch: ASSIGN x c"]
+
+        self.assertTrue(TestUtils.check(input, expected, 147))
+
+    def test_48(self):
+        input = [
+            "INSERT x string",
+            "ASSIGN x 'a'",
+            "ASSIGN x ' '"
+        ]
+        expected = ["Invalid: ASSIGN x ' '"]
+
+        self.assertTrue(TestUtils.check(input, expected, 148))
+
+    def test_49(self):
+        input = [
+            "INSERT a number",
+            "INSERT b string",
+            "BEGIN",
+            "INSERT c number",
+            "INSERT d string",
+            "BEGIN",
+            "INSERT a string",
+            "INSERT b number",
+            "RPRINT",
+            "END",
+            "PRINT",
+            "END",
+            "RPRINT"
+        ]
+        expected = ["success", "success", "success", "success", "success", "success",
+                    "b//2 a//2 d//1 c//1", "a//0 b//0 c//1 d//1", "b//0 a//0"]
+        
+        self.assertTrue(TestUtils.check(input, expected, 149))

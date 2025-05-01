@@ -1,0 +1,9 @@
+INSERT x number
+INSERT y string
+BEGIN
+INSERT x string
+INSERT z number
+ASSIGN z 100
+LOOKUP z
+END
+PRINT

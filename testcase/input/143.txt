@@ -1,0 +1,4 @@
+INSERT x number
+INSERT 123y string
+ASSIGN x 10
+PRINT

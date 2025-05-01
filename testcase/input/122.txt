@@ -1,0 +1,2 @@
+INSERT x boolean
+ASSIGN x 1

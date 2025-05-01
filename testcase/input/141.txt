@@ -1,0 +1,6 @@
+INSERT x number
+BEGIN
+INSERT x string
+ASSIGN x 'abc'
+END
+ASSIGN x 'def'

@@ -1,0 +1,11 @@
+INSERT a number
+BEGIN
+INSERT c string
+ASSIGN c 'xyz'
+BEGIN
+INSERT b number
+PRINT
+END
+RPRINT
+LOOKUP b
+END

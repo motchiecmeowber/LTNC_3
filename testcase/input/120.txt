@@ -1,0 +1,2 @@
+INSERT A4 string
+PRINT

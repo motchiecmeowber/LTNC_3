@@ -1,0 +1,2 @@
+ADD x number
+LOOKUP x

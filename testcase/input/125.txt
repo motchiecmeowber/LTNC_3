@@ -1,0 +1,4 @@
+INSERT x number
+INSERT y string
+ASSIGN x 18
+ASSIGN y x

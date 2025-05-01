@@ -1,0 +1,19 @@
+INSERT x number
+INSERT y string
+BEGIN
+INSERT z number
+ASSIGN z 42
+INSERT x string
+ASSIGN x 'hello'
+BEGIN
+INSERT y number
+ASSIGN y z
+LOOKUP x
+LOOKUP y
+LOOKUP z
+END
+LOOKUP x
+LOOKUP y
+END
+LOOKUP x
+LOOKUP y

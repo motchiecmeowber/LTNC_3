@@ -1,0 +1,8 @@
+INSERT a string
+INSERT b string
+INSERT c string
+ASSIGN a 'hello'
+ASSIGN b a
+ASSIGN c b
+INSERT x number
+ASSIGN x c

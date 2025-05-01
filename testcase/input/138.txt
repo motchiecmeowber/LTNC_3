@@ -1,0 +1,13 @@
+INSERT x number
+INSERT y string
+BEGIN
+INSERT z number
+ASSIGN z x
+BEGIN
+INSERT a string
+ASSIGN a y
+INSERT b number
+ASSIGN b z
+ASSIGN b a
+END
+END

@@ -1,0 +1,7 @@
+INSERT z string
+BEGIN
+INSERT x number
+ASSIGN x z
+LOOKUP x
+END
+RPRINT

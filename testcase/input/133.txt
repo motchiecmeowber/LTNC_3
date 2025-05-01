@@ -1,0 +1,2 @@
+Insert x number
+load x 1

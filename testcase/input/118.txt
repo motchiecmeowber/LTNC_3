@@ -1,0 +1,10 @@
+INSERT x number
+BEGIN
+INSERT y string
+INSERT z number
+ASSIGN z 2300
+ASSIGN x 12
+ASSIGN x z
+RPRINT
+END
+PRINT

@@ -1,0 +1,10 @@
+PRINT
+INSERT x number
+BEGIN
+INSERT c string
+BEGIN
+INSERT h string
+RPRINT
+END
+PRINT
+END

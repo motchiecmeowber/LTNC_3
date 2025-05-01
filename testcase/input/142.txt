@@ -1,0 +1,14 @@
+INSERT a number
+INSERT b number
+INSERT c number
+ASSIGN a 10
+ASSIGN b a
+ASSIGN c b
+BEGIN
+INSERT d number
+ASSIGN d c
+BEGIN
+INSERT e string
+ASSIGN e d
+END
+END
