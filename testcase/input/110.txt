@@ -1,0 +1,9 @@
+INSERT a number
+INSERT b number
+BEGIN
+INSERT c string
+END
+INSERT d string
+BEGIN
+PRINT
+END
