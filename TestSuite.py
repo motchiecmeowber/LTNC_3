@@ -86,7 +86,7 @@ class TestSymbolTable(unittest.TestCase):
 
     def test_7(self):
         input = ["INSERT x string", "ASSIGN x allocate"]
-        expected = ["InvalidDeclaration: ASSIGN x allocate"]
+        expected = ["Invalid: ASSIGN x allocate"]
 
         self.assertTrue(TestUtils.check(input, expected, 107))
 
@@ -148,5 +148,32 @@ class TestSymbolTable(unittest.TestCase):
         expected = ["UnknownBlock"]
 
         self.assertTrue(TestUtils.check(input, expected, 112))
+
+    def test_13(self):
+        input = [
+            "BEGIN",
+            "BEGIN",
+            "BEGIN",
+            "INSERT a number",
+            "END",
+            "INSERT b number",
+            "ASSIGN a b",
+            "END",
+            "RPRINT"
+        ]
+        expected = ["Invalid: ASSIGN a b"]
+
+        self.assertTrue(TestUtils.check(input, expected, 113))
+
+    def test_14(self):
+        input = [
+            "INSERT x string",
+            "INSERT y string",
+            "ASSIGN x ''",
+            "ASSIGN y x"
+        ]
+        expected = ["success", "success", "success", "success"]
+
+        self.assertTrue(TestUtils.check(input, expected, 114))
 
     

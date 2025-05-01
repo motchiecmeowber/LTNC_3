@@ -12,7 +12,7 @@ def check_value(value):
     return value.isdigit()
 
 def check_string(value):
-    return bool (len(value) >= 3 and value[0] == "'" and value[-1] == "'" and all (c.isalnum() for c in value[1:-1]))
+    return bool (len(value) >= 2 and value[0] == "'" and value[-1] == "'" and all (c.isalnum() for c in value[1:-1]))
 
 def check_redeclared(symbol, name, level):
     return bool (any (s[0] == name and s[2] == level for s in symbol))
@@ -28,7 +28,7 @@ def insert(symbol, name, type, level):
         if check_redeclared(symbol, name, level):
             raise Redeclared(instruction)
         return symbol + [[name, type, level]], level, "success"
-    raise InvalidDeclaration(instruction)
+    raise InvalidInstruction(instruction)
 
 def assign(symbol, name, value, level):
     instruction = f"ASSIGN {name} {value}"
@@ -49,7 +49,7 @@ def assign(symbol, name, value, level):
                 
             return symbol, level, "success"
         raise Undeclared(instruction)
-    raise InvalidDeclaration(instruction)
+    raise InvalidInstruction(instruction)
 
 def begin(symbol, level):
     return symbol, level + 1, None

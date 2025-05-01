@@ -1,1 +1,1 @@
-InvalidDeclaration: ASSIGN x allocate
+Invalid: ASSIGN x allocate
