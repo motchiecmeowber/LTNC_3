@@ -161,11 +161,20 @@ class TestSymbolTable(unittest.TestCase):
             "END",
             "RPRINT"
         ]
-        expected = ["Invalid: ASSIGN a b"]
+        expected = ["Undeclared: ASSIGN a b"]
 
         self.assertTrue(TestUtils.check(input, expected, 113))
 
     def test_14(self):
+        input = [
+            "INSERT x string",
+            "ASSIGN x ''"
+        ]
+        expected = ["success", "success"]
+
+        self.assertTrue(TestUtils.check(input, expected, 114))
+
+    def test_15(self):
         input = [
             "INSERT x string",
             "INSERT y string",
@@ -174,6 +183,28 @@ class TestSymbolTable(unittest.TestCase):
         ]
         expected = ["success", "success", "success", "success"]
 
-        self.assertTrue(TestUtils.check(input, expected, 114))
+        self.assertTrue(TestUtils.check(input, expected, 115))
 
-    
+    def test_16(self):
+        input = [
+            "INSERT x string",
+            "ASSIGN x 'abc'",
+            "INSERT y string",
+            "ASSIGN y x",
+        ]
+        expected = ["success", "success", "success", "success"]
+
+        self.assertTrue(TestUtils.check(input, expected, 116))
+
+    def test_17(self):
+        input = [
+            "INSERT x string",
+            "BEGIN",
+            "INSERT y string",
+            "ASSIGN y x",
+            "PRINT",
+            "END"
+        ]
+        expected = ["success", "success", "success", "x//0 y//1"]
+
+        self.assertTrue(TestUtils.check(input, expected, 117))

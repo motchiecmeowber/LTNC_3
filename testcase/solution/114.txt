@@ -1,1 +1,2 @@
-Invalid: ASSIGN y x
+success
+success

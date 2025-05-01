@@ -33,21 +33,32 @@ def insert(symbol, name, type, level):
 def assign(symbol, name, value, level):
     instruction = f"ASSIGN {name} {value}"
 
-    if check_identifier_name(name) and (check_value(value) or check_string(value)):
+    if check_identifier_name(name):
         filtered = check_undeclared(symbol, name, level)
         if filtered:
             symbol_type = filtered[1]
             
-            if check_value(value) and symbol_type != "number":
-                raise TypeMismatch(instruction)
-            elif check_string(value) and symbol_type != "string":
-                raise TypeMismatch(instruction)
-            else:
-                value_symbol = check_undeclared(symbol, value, level)
-                if value_symbol and value_symbol[1] != symbol_type:
+            if check_value(value):
+                if symbol_type != "number":
                     raise TypeMismatch(instruction)
-                
-            return symbol, level, "success"
+                return symbol, level, "success"
+            
+            elif check_string(value):
+                if symbol_type != "string":
+                    raise TypeMismatch(instruction)
+                return symbol, level, "success"
+            
+            elif check_identifier_name(value):
+                value_symbol = check_undeclared(symbol, value, level)
+                if not value_symbol:
+                    raise InvalidInstruction(instruction)
+                if value_symbol[1] != symbol_type:
+                    raise TypeMismatch(instruction)
+                return symbol, level, "success"
+            
+            else:
+                raise InvalidInstruction(instruction)
+            
         raise Undeclared(instruction)
     raise InvalidInstruction(instruction)
 

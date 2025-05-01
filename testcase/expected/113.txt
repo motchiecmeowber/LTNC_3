@@ -1,1 +1,1 @@
-Invalid: ASSIGN a b
+Undeclared: ASSIGN a b

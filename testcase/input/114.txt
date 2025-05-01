@@ -1,4 +1,2 @@
 INSERT x string
-INSERT y string
 ASSIGN x ''
-ASSIGN y x

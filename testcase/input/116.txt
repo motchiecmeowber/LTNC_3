@@ -1,0 +1,4 @@
+INSERT x string
+ASSIGN x 'abc'
+INSERT y string
+ASSIGN y x
