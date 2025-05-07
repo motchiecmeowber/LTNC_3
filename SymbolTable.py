@@ -33,7 +33,7 @@ def insert(symbol, name, type, level):
 def assign(symbol, name, value, level):
     instruction = f"ASSIGN {name} {value}"
 
-    if check_identifier_name(name):
+    if check_identifier_name(name) and (check_value(value) or check_string(value) or check_identifier_name(value)):
         filtered = check_undeclared(symbol, name, level)
         if filtered:
             symbol_type = filtered[1]
@@ -48,16 +48,13 @@ def assign(symbol, name, value, level):
                     raise TypeMismatch(instruction)
                 return symbol, level, "success"
             
-            elif check_identifier_name(value):
+            else:
                 value_symbol = check_undeclared(symbol, value, level)
                 if not value_symbol:
                     raise InvalidInstruction(instruction)
                 if value_symbol[1] != symbol_type:
                     raise TypeMismatch(instruction)
                 return symbol, level, "success"
-            
-            else:
-                raise InvalidInstruction(instruction)
             
         raise Undeclared(instruction)
     raise InvalidInstruction(instruction)
@@ -77,7 +74,8 @@ def lookup(symbol, name, level):
         s = check_undeclared(symbol, name, level)
         if s:
             return symbol, level, str(s[2])
-    raise Undeclared(instruction)
+        raise Undeclared(instruction)
+    raise InvalidInstruction(instruction)
 
 def print(symbol, level):
     active_symbols = [(s[0], s[2]) for s in symbol if s[2] <= level]

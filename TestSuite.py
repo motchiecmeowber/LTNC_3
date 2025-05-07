@@ -655,3 +655,24 @@ class TestSymbolTable(unittest.TestCase):
                     "b//2 a//2 d//1 c//1", "a//0 b//0 c//1 d//1", "b//0 a//0"]
         
         self.assertTrue(TestUtils.check(input, expected, 149))
+
+    def test_50(self):
+        input = ["INSERT number number"]
+        expected = ["success"]
+
+        self.assertTrue(TestUtils.check(input, expected, 150))
+
+    def test_51(self):
+        input = ["ASSIGN x 123.4"]
+        expected = ["Invalid: ASSIGN x 123.4"]
+        self.assertTrue(TestUtils.check(input, expected, 151))
+
+    def test_52(self):
+        input = ["LOOKUP A"]
+        expected = ["Invalid: LOOKUP A"]
+        self.assertTrue(TestUtils.check(input, expected, 152))
+
+    def test_53(self):
+        input = ["ASSIGN w string"]
+        expected = ["Undeclared: ASSIGN w string"]
+        self.assertTrue(TestUtils.check(input, expected, 153))
