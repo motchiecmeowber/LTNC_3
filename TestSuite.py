@@ -86,7 +86,7 @@ class TestSymbolTable(unittest.TestCase):
 
     def test_7(self):
         input = ["INSERT x string", "ASSIGN x allocate"]
-        expected = ["Invalid: ASSIGN x allocate"]
+        expected = ["Undeclared: ASSIGN x allocate"]
 
         self.assertTrue(TestUtils.check(input, expected, 107))
 
@@ -676,3 +676,150 @@ class TestSymbolTable(unittest.TestCase):
         input = ["ASSIGN w string"]
         expected = ["Undeclared: ASSIGN w string"]
         self.assertTrue(TestUtils.check(input, expected, 153))
+
+    def test_54(self):
+        input = [
+            "",
+            "INSERT x string"
+        ]
+        expected = ["Invalid: "]
+        
+        self.assertTrue(TestUtils.check(input, expected, 154))
+
+    def test_55(self):
+        input = []
+        expected = []
+        self.assertTrue(TestUtils.check(input, expected, 155))
+
+    def test_56(self):
+        input = [
+            "INSERT z string",
+            "INSERT x string",
+            "INSERT y string",
+            "BEGIN",
+            "INSERT x string",
+            "BEGIN",
+            "RPRINT",
+            "INSERT z string",
+            "END",
+            "END"
+        ]
+        expected = ["success", "success", "success", "success", "x//1 y//0 z//0", "success"]
+
+        self.assertTrue(TestUtils.check(input, expected, 156))
+
+    def test_57(self):
+        input = ["PRINT"]
+        expected = []
+        self.assertTrue(TestUtils.check(input, expected, 157))
+
+    def test_58(self):
+        input = [
+            "BEGIN",
+            "INSERT x number",
+            "END",
+            "INSERT x number",
+            "BEGIN",
+            "INSERT x number",
+            "END",
+            "LOOKUP x"
+        ]
+        expected = ["success", "success", "success", "0"]
+        
+        self.assertTrue(TestUtils.check(input, expected, 158))
+
+    def test_59(self):
+        input = [
+            "BEGIN",
+            "INSERT x string",
+            "INSERT y string",
+            "ASSIGN y 1",
+            "INSERT x number",
+            "INSERT y number",
+            "END"
+        ]
+        expected = ["TypeMismatch: ASSIGN y 1"]
+
+        self.assertTrue(TestUtils.check(input, expected, 159))
+
+    def test_60(self):
+        input = [
+            "INSERT number number",
+            "ASSIGN number number"
+        ]
+        expected = ["success", "success"]
+
+        self.assertTrue(TestUtils.check(input, expected, 160))
+
+    def test_61(self):
+        input = [
+            "INSERT string string",
+            "INSERT number number",
+            "ASSIGN string number"
+        ]
+        expected = ["TypeMismatch: ASSIGN string number"]
+
+        self.assertTrue(TestUtils.check(input, expected, 161))
+
+    def test_62(self):
+        input = ["INSERT x number", "ASSIGN x bc~ed"]
+        expected = ["Invalid: ASSIGN x bc~ed"]
+        self.assertTrue(TestUtils.check(input, expected, 162))
+
+    def test_63(self):
+        input = ["INSERT x string", "ASSIGN x 'azAZq7e269'"]
+        expected = ["success", "success"]
+        self.assertTrue(TestUtils.check(input, expected, 163))
+
+    def test_64(self):
+        input = ["INSERT a number", "ASSIGN a 12e-7"]
+        expected = ["Invalid: ASSIGN a 12e-7"]
+        self.assertTrue(TestUtils.check(input, expected, 164))
+
+    def test_65(self):
+        input = [
+            "INSERT abcde number", 
+            "INSERT abc number", 
+            "INSERT abcd number", 
+            "INSERT abcdef number", 
+            "INSERT abc number",
+            "INSERT abcde number"
+        ]
+        expected = ["Redeclared: INSERT abc number"]
+
+        self.assertTrue(TestUtils.check(input, expected, 165))
+
+    def test_66(self):
+        input = [
+            "BEGIN", 
+            "INSERT x string", 
+            "ASSIGN x 'invalid'"
+        ]
+        expected = ["UnclosedBlock: 1"]
+
+        self.assertTrue(TestUtils.check(input, expected, 166))
+
+    def test_67(self):
+        input = ["RPRINT "]
+        expected = ["Invalid: RPRINT "]
+        self.assertTrue(TestUtils.check(input, expected, 167))
+
+    def test_68(self):
+        input = [
+            "INSERT x1 number", 
+            "BEGIN", 
+            "ASSIGN x1 12/9"
+        ]
+        expected = ["Invalid: ASSIGN x1 12/9"]
+
+        self.assertTrue(TestUtils.check(input, expected, 168))
+
+    def test_69(self):
+        input = ["ASSIGN bc~ed 1"]
+        expected = ["Invalid: ASSIGN bc~ed 1"]
+        self.assertTrue(TestUtils.check(input, expected, 169))
+
+    def test_70(self):
+        input = ["INSERT x string", "ASSIGN x x"]
+        expected = ["success", "success"]
+        self.assertTrue(TestUtils.check(input, expected, 170))

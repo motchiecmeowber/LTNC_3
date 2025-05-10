@@ -1,0 +1,3 @@
+BEGIN
+INSERT x string
+ASSIGN x 'invalid'

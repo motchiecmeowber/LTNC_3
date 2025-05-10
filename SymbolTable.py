@@ -51,7 +51,7 @@ def assign(symbol, name, value, level):
             else:
                 value_symbol = check_undeclared(symbol, value, level)
                 if not value_symbol:
-                    raise InvalidInstruction(instruction)
+                    raise Undeclared(instruction)
                 if value_symbol[1] != symbol_type:
                     raise TypeMismatch(instruction)
                 return symbol, level, "success"
