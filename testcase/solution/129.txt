@@ -1,1 +1,1 @@
-Invalid: ADD x number
+Invalid: Invalid command

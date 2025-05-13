@@ -92,7 +92,7 @@ class TestSymbolTable(unittest.TestCase):
 
     def test_8(self):
         input = ["   INSERT x number"]
-        expected = ["Invalid:    INSERT x number"]
+        expected = ["Invalid: Invalid command"]
 
         self.assertTrue(TestUtils.check(input, expected, 108))
 
@@ -328,7 +328,7 @@ class TestSymbolTable(unittest.TestCase):
             "ADD x number",
             "LOOKUP x"
         ]
-        expected = ["Invalid: ADD x number"]
+        expected = ["Invalid: Invalid command"]
 
         self.assertTrue(TestUtils.check(input, expected, 129))
 
@@ -385,7 +385,7 @@ class TestSymbolTable(unittest.TestCase):
             "Insert x number",
             "load x 1",
         ]
-        expected = ["Invalid: Insert x number"]
+        expected = ["Invalid: Invalid command"]
 
         self.assertTrue(TestUtils.check(input, expected, 133))
 
@@ -682,7 +682,7 @@ class TestSymbolTable(unittest.TestCase):
             "",
             "INSERT x string"
         ]
-        expected = ["Invalid: "]
+        expected = ["Invalid: Invalid command"]
         
         self.assertTrue(TestUtils.check(input, expected, 154))
 
@@ -823,3 +823,33 @@ class TestSymbolTable(unittest.TestCase):
         input = ["INSERT x string", "ASSIGN x x"]
         expected = ["success", "success"]
         self.assertTrue(TestUtils.check(input, expected, 170))
+
+    def test_71(self):
+        input = ["abc"]
+        expected = ["Invalid: Invalid command"]
+        self.assertTrue(TestUtils.check(input, expected, 171))
+
+    def test_72(self):
+        input = ["INSERT    a    string"]
+        expected = ["Invalid: INSERT    a    string"]
+        self.assertTrue(TestUtils.check(input, expected, 172))
+
+    def test_73(self):
+        input = ["ASSIGN"]
+        expected = ["Invalid: ASSIGN"]
+        self.assertTrue(TestUtils.check(input, expected, 173))
+
+    def test_74(self):
+        input = ["INSERT\ta\tnumber"]
+        expected = ["Invalid: Invalid command"]
+        self.assertTrue(TestUtils.check(input, expected, 174))
+
+    def test_75(self):
+        input = ["INSERT\na\nnumber"]
+        expected = ["Invalid: Invalid command"]
+        self.assertTrue(TestUtils.check(input, expected, 175))
+
+    def test_76(self):
+        input = ["INSER 1x number"]
+        expected = ["Invalid: Invalid command"]
+        self.assertTrue(TestUtils.check(input, expected, 176))

@@ -107,25 +107,39 @@ def rprint(symbol, level):
 def process_command(commands, symbol, level):
     cmds = commands.split(" ")
     if not cmds:
-        raise InvalidInstruction(cmds)
+        raise InvalidInstruction(f"Invalid command")
     
     cmd = cmds[0]
-    if cmd == "INSERT" and len(cmds) == 3:
-        return insert(symbol, cmds[1], cmds[2], level)
-    elif cmd == "ASSIGN" and len(cmds) == 3:
-        return assign(symbol, cmds[1], cmds[2], level)
-    elif cmd == "BEGIN" and len(cmds) == 1:
-        return begin(symbol, level)
-    elif cmd == "END" and len(cmds) == 1:
-        return end(symbol, level)
-    elif cmd == "LOOKUP" and len(cmds) == 2:
-        return lookup(symbol, cmds[1], level)
-    elif cmd == "PRINT" and len(cmds) == 1:
-        return print(symbol, level)
-    elif cmd == "RPRINT" and len(cmds) == 1:
-        return rprint(symbol, level)
-    else:
+    if cmd == "INSERT":
+        if len(cmds) == 3:
+            return insert(symbol, cmds[1], cmds[2], level)
         raise InvalidInstruction(commands)
+    elif cmd == "ASSIGN":
+        if len(cmds) == 3:
+            return assign(symbol, cmds[1], cmds[2], level)
+        raise InvalidInstruction(commands)
+    elif cmd == "BEGIN":
+        if len(cmds) == 1:
+            return begin(symbol, level)
+        raise InvalidInstruction(commands)
+    elif cmd == "END":
+        if len(cmds) == 1:
+            return end(symbol, level)
+        raise InvalidInstruction(commands)
+    elif cmd == "LOOKUP":
+        if len(cmds) == 2:
+            return lookup(symbol, cmds[1], level)
+        raise InvalidInstruction(commands)
+    elif cmd == "PRINT":
+        if len(cmds) == 1:
+            return print(symbol, level)
+        raise InvalidInstruction(commands)
+    elif cmd == "RPRINT":
+        if len(cmds) == 1:
+            return rprint(symbol, level)
+        raise InvalidInstruction(commands)
+    else:
+        raise InvalidInstruction(f"Invalid command")
 
 def simulate(list_of_commands):
     def process(commands, symbol, level, result):
