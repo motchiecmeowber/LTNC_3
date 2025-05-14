@@ -853,3 +853,13 @@ class TestSymbolTable(unittest.TestCase):
         input = ["INSER 1x number"]
         expected = ["Invalid: Invalid command"]
         self.assertTrue(TestUtils.check(input, expected, 176))
+    
+    def test_77(self):
+        input = ["INSERT \ta\tnumber"]
+        expected = ["Invalid: INSERT \ta\tnumber"]
+        self.assertTrue(TestUtils.check(input, expected, 177))
+
+    def test_78(self):
+        input = ["\tINSERT a number"]
+        expected = ["Invalid: Invalid command"]
+        self.assertTrue(TestUtils.check(input, expected, 178))
